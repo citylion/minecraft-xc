@@ -16,12 +16,12 @@ version = "0.0.4"
 val OUTPUT_JAR_NAME = "xc"
 
 // target will be set to minecraft version by cli input parameter
-var target = ""
+var target = "1.18"
 
 plugins {
     // Apply the Kotlin JVM plugin to add support for Kotlin.
-    id("org.jetbrains.kotlin.jvm")
-    id("com.github.johnrengelman.shadow")
+    id("org.jetbrains.kotlin.jvm") version "1.6.10"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
     // maven() // no longer needed in gradle 7
     
     // include paperweight, but DO NOT APPLY BY DEFAULT...
@@ -39,7 +39,7 @@ plugins {
     // id("io.papermc.paperweight.userdev") version "1.3.8" apply false
     
     // USE FOR 1.18.2 (DEFAULT)
-    id("io.papermc.paperweight.userdev")
+    id("io.papermc.paperweight.userdev") version "1.7.7"
 }
 
 repositories {
@@ -48,7 +48,7 @@ repositories {
     jcenter()
     
     maven { // paper
-        url = uri("https://papermc.io/repo/repository/maven-public/")
+        url = uri("https://repo.papermc.io/repository/maven-public/")
     }
     maven { // worldguard
         url = uri("https://maven.enginehub.org/repo/")
@@ -114,7 +114,7 @@ dependencies {
         configurations["compileOnlyPriority"]("com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT")
         target = "1.16.5"
     }
-    else if ( project.hasProperty("1.18") == true ) {
+    //else if ( project.hasProperty("1.18") == true ) {
         java.toolchain.languageVersion.set(JavaLanguageVersion.of(17)) // need java==17 for 1.18.2
         sourceSets["main"].java.srcDir("src/nms/v1_18_R2")
         // apply<PaperweightUser>() // applies the paper weight plugin for minecraft nms classes
@@ -134,7 +134,7 @@ dependencies {
         tasks.named("reobfJar") {
             base.archivesBaseName = "${OUTPUT_JAR_NAME}-${target}-SNAPSHOT"
         }
-    }
+    //}
 }
 
 tasks.withType<KotlinCompile> {
@@ -151,7 +151,7 @@ tasks {
             }
         }
 
-        classifier = ""
+        //classifier = ""
         configurations = mutableListOf(project.configurations.named("resolvableImplementation").get()) as List<FileCollection>
     }
 }
@@ -167,6 +167,7 @@ tasks {
 }
 
 gradle.taskGraph.whenReady {
+    /*
     tasks {
         named<ShadowJar>("shadowJar") {
             if ( hasTask(":release") ) {
@@ -179,4 +180,6 @@ gradle.taskGraph.whenReady {
             }
         }
     }
+
+     */
 }
