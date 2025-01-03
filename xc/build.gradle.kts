@@ -6,8 +6,8 @@
 
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import io.papermc.paperweight.userdev.PaperweightUser
-import io.papermc.paperweight.tasks.RemapJar
+//import io.papermc.paperweight.userdev.PaperweightUser
+//import io.papermc.paperweight.tasks.RemapJar
 
 // plugin versioning
 version = "0.0.4"
@@ -16,43 +16,27 @@ version = "0.0.4"
 val OUTPUT_JAR_NAME = "xc"
 
 // target will be set to minecraft version by cli input parameter
-var target = "1.18"
+var target = "1.21"
+
+
 
 plugins {
-    // Apply the Kotlin JVM plugin to add support for Kotlin.
-    id("org.jetbrains.kotlin.jvm") version "1.6.10"
-    id("com.github.johnrengelman.shadow") version "7.1.2"
-    // maven() // no longer needed in gradle 7
-    
-    // include paperweight, but DO NOT APPLY BY DEFAULT...
-    // we need imports, but only conditionally apply it for 1.17+ builds
-    // for 1.16.5, we don't want to apply because not supported, it
-    // does not allow building unless a bundle version is applied,
-    // which does not exist for 1.16.5, so its impossible to build with
-    // paperweight plugin enabled on 1.16.5
-    // https://stackoverflow.com/questions/62579114/how-to-optionally-apply-some-plugins-using-kotlin-dsl-and-plugins-block-with-gra
 
-    // i fucking hate gradle and cant configure this
-    // just manually uncomment
-
-    // USE FOR 1.16.5, UNCOMMENT WHEN NEEDED :^(
-    // id("io.papermc.paperweight.userdev") version "1.3.8" apply false
-    
-    // USE FOR 1.18.2 (DEFAULT)
+    //id("io.papermc.paperweight.userdev") version "2.0.0-beta.11"
     id("io.papermc.paperweight.userdev") version "1.7.7"
+    id("org.jetbrains.kotlin.jvm") version "1.9.0"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
+
 }
 
 repositories {
-    // Use jcenter for resolving dependencies.
-    // You can declare any Maven/Ivy/file repository here.
-    jcenter()
-    
-    maven { // paper
-        url = uri("https://repo.papermc.io/repository/maven-public/")
+
+    repositories {
+        mavenCentral()
+        maven { url = uri("https://repo.papermc.io/repository/maven-public/") }
+        maven { url = uri("https://maven.enginehub.org/repo/") }
     }
-    maven { // worldguard
-        url = uri("https://maven.enginehub.org/repo/")
-    }
+
 }
 
 configurations {
@@ -72,7 +56,11 @@ configurations {
         isCanBeConsumed = true
         sourceSets["main"].compileClasspath = configurations["compileOnlyPriority"] + sourceSets["main"].compileClasspath
     }
+
 }
+
+
+
 
 
 dependencies {
@@ -106,6 +94,7 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
 
     // MINECRAFT VERSION SPECIFIC BUILD CONFIGURATION
+    /*
     if ( project.hasProperty("1.16") == true ) {
         java.toolchain.languageVersion.set(JavaLanguageVersion.of(16)) // need java==16 for 1.16.5
         sourceSets["main"].java.srcDir("src/nms/v1_16_R3")
@@ -114,7 +103,7 @@ dependencies {
         configurations["compileOnlyPriority"]("com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT")
         target = "1.16.5"
     }
-    //else if ( project.hasProperty("1.18") == true ) {
+    else if ( project.hasProperty("1.18") == true ) {
         java.toolchain.languageVersion.set(JavaLanguageVersion.of(17)) // need java==17 for 1.18.2
         sourceSets["main"].java.srcDir("src/nms/v1_18_R2")
         // apply<PaperweightUser>() // applies the paper weight plugin for minecraft nms classes
@@ -134,6 +123,30 @@ dependencies {
         tasks.named("reobfJar") {
             base.archivesBaseName = "${OUTPUT_JAR_NAME}-${target}-SNAPSHOT"
         }
+    }
+
+     */
+    //else if ( project.hasProperty("1.21") == true ) {
+    java.toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+    sourceSets["main"].java.srcDir("src/nms/v1_21_R0")
+    // apply<PaperweightUser>() // applies the paper weight plugin for minecraft nms classes
+    paperweight.paperDevBundle("1.21.1-R0.1-SNAPSHOT")
+    //paperweight.paperDevBundle("1.21.4-R0.1-SNAPSHOT")
+    //compileOnly("io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT")
+    target = "1.21.4"
+
+    tasks {
+        assemble {
+            // must write it like below because in 1.16 config, reobfJar does not exist
+            // so the simpler definition below wont compile
+            // dependsOn(reobfJar) // won't compile :^(
+            dependsOn(project.tasks.first { it.name.contains("reobfJar") })
+        }
+    }
+
+    tasks.named("reobfJar") {
+        base.archivesBaseName = "${OUTPUT_JAR_NAME}-${target}-SNAPSHOT"
+    }
     //}
 }
 

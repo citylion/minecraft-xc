@@ -7,9 +7,11 @@
  * in the user manual at https://docs.gradle.org/6.0.1/userguide/multi_project_builds.html
  */
 pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        maven("https://repo.papermc.io/repository/maven-public/")
+    pluginManagement {
+        repositories {
+            gradlePluginPortal()
+            maven("https://repo.papermc.io/repository/maven-public/")
+        }
     }
     plugins {
         // Apply the Kotlin JVM plugin to add support for Kotlin.
@@ -32,7 +34,7 @@ pluginManagement {
         // id("io.papermc.paperweight.userdev") version "1.3.8" apply false
         
         // USE FOR 1.18.2 (DEFAULT)
-        id("io.papermc.paperweight.userdev") version "1.3.8"
+        id("io.papermc.paperweight.userdev") version "2.0.0-beta.11"
 
         // maven() // no longer needed in gradle 7
     }

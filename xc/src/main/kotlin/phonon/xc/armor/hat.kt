@@ -24,7 +24,6 @@ import phonon.xc.item.getHatInHand
 import phonon.xc.util.mapToObject
 import phonon.xc.util.IntoItemStack
 
-
 public data class Hat(
     public val id: Int = Int.MAX_VALUE, // invalid
     public val armor: Double = 4.0,
@@ -59,7 +58,9 @@ public data class Hat(
             AttributeModifier.Operation.ADD_NUMBER,
             EquipmentSlot.HEAD,
         )
-        itemMeta.addAttributeModifier(Attribute.GENERIC_ARMOR, modifier)
+        //1.18 conditional
+        //itemMeta.addAttributeModifier(Attribute.GENERIC_ARMOR, modifier)
+        itemMeta.addAttributeModifier(Attribute.ARMOR, modifier)
         
         itemMeta.removeItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 

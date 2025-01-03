@@ -235,9 +235,10 @@ public data class ThrowableItem(
                             Particle.valueOf(ty)
                         } catch ( err: Exception ) {
                             err.printStackTrace()
-                            Particle.EXPLOSION_LARGE
+                            //1.18 conditional
+                            Particle.EXPLOSION
                         }
-                    } ?: Particle.EXPLOSION_LARGE
+                    } ?: Particle.EXPLOSION
                     val count = particles.getLong("count")?.toInt() ?: 1
                     val randomX = particles.getDouble("random_x") ?: 0.0
                     val randomY = particles.getDouble("random_y") ?: 0.0

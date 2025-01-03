@@ -255,8 +255,11 @@ private fun XC.cleanupGunMeta(
 
     // SET GUN ATTACK SPEED SETTING
     // (to match gun shoot delay)
-    itemMeta.removeAttributeModifier(Attribute.GENERIC_ATTACK_SPEED)
-    itemMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, gun.attackSpeedAttributeModifier)
+    //1.18 conditional
+    //itemMeta.removeAttributeModifier(Attribute.GENERIC_ATTACK_SPEED)
+    //itemMeta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, gun.attackSpeedAttributeModifier)
+    itemMeta.removeAttributeModifier(Attribute.ATTACK_SPEED)
+    itemMeta.addAttributeModifier(Attribute.ATTACK_SPEED, gun.attackSpeedAttributeModifier)
 
     return setGunItemMetaModel(itemMeta, gun, ammoCurrent, aimdownsights)
 }

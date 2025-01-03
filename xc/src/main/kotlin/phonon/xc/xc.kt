@@ -1149,14 +1149,18 @@ public class XC(
                         if ( entity.type == EntityType.ARMOR_STAND ) {
                             val hitboxSize = customModelHitboxes.get(entity.getUniqueId())
                             if ( hitboxSize != null ) {
-                                Hitbox.from(entity, hitboxSize).visualize(world, Particle.VILLAGER_HAPPY)
+                                //1.18 conditional
+                                //Hitbox.from(entity, hitboxSize).visualize(world, Particle.VILLAGER_HAPPY)
+                                Hitbox.from(entity, hitboxSize).visualize(world, Particle.HAPPY_VILLAGER)
                                 continue
                             }
                         }
         
                         // regular entities
                         if ( config.entityTargetable[entity.type] ) {
-                            Hitbox.from(entity, config.entityHitboxSizes[entity.type]).visualize(world, Particle.VILLAGER_HAPPY)
+                            //1.18 conditional
+                            //Hitbox.from(entity, config.entityHitboxSizes[entity.type]).visualize(world, Particle.VILLAGER_HAPPY)
+                            Hitbox.from(entity, config.entityHitboxSizes[entity.type]).visualize(world, Particle.HAPPY_VILLAGER)
                         }
                     }
                 }

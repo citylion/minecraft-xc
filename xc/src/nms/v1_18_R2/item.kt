@@ -9,15 +9,9 @@
  */
 package phonon.xc.item
 
-import java.util.EnumMap
-import kotlin.math.min
-import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import org.bukkit.inventory.meta.ItemMeta
-import org.bukkit.persistence.PersistentDataType
-import org.bukkit.persistence.PersistentDataContainer
 import phonon.xc.nms.NmsNBTTagCompound
 import phonon.xc.nms.NmsNBTTagList
 import phonon.xc.nms.NBTTagString
@@ -31,10 +25,8 @@ import phonon.xc.nms.CraftPlayer
 import phonon.xc.nms.CraftMagicNumbers
 import phonon.xc.nms.getMainHandNMSItem
 import phonon.xc.XC
-import phonon.xc.ammo.Ammo
 import phonon.xc.armor.Hat
 import phonon.xc.gun.Gun
-import phonon.xc.landmine.Landmine
 import phonon.xc.melee.MeleeWeapon
 import phonon.xc.throwable.ThrowableItem
 

@@ -8,9 +8,11 @@
  */
 
 pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        maven("https://repo.papermc.io/repository/maven-public/")
+    pluginManagement {
+        repositories {
+            gradlePluginPortal()
+            maven("https://repo.papermc.io/repository/maven-public/")
+        }
     }
 
     plugins {
@@ -34,7 +36,7 @@ pluginManagement {
         // id("io.papermc.paperweight.userdev") version "1.3.8" apply false
         
         // USE FOR 1.18.2 (DEFAULT)
-        id("io.papermc.paperweight.userdev") version "1.3.8"
+        id("io.papermc.paperweight.userdev") version "2.0.0-beta.11"
 
         // maven() // no longer needed in gradle 7
     }

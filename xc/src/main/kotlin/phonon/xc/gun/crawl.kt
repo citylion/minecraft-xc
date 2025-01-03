@@ -256,10 +256,13 @@ public value class CrawlStop(
     val player: Player,
 )
 
+//1.18 conditional
 // Slowness effect while crawling. Max potion amplifier should be 255 i think... (ambient = true, particles = false)
-private val SLOWNESS_EFFECT: PotionEffect = PotionEffect(PotionEffectType.SLOW, Int.MAX_VALUE, 255, true, false)
+//private val SLOWNESS_EFFECT: PotionEffect = PotionEffect(PotionEffectType.SLOW, Int.MAX_VALUE, 255, true, false)
 // No jump effect: when jump negative, prevents player from jumping (ambient = true, particles = false)
-private val NO_JUMP_EFFECT: PotionEffect = PotionEffect(PotionEffectType.JUMP, Int.MAX_VALUE, -128, true, false)
+//private val NO_JUMP_EFFECT: PotionEffect = PotionEffect(PotionEffectType.JUMP, Int.MAX_VALUE, -128, true, false)
+private val SLOWNESS_EFFECT: PotionEffect = PotionEffect(PotionEffectType.SLOWNESS, Int.MAX_VALUE, 255, true, false)
+private val NO_JUMP_EFFECT: PotionEffect = PotionEffect(PotionEffectType.JUMP_BOOST, Int.MAX_VALUE, -128, true, false)
 
 /**
  * Process start crawl requests for players. Returns new queue for next tick.
@@ -331,7 +334,9 @@ internal fun XC.stopCrawlSystem(
             val playerId = player.getUniqueId()
 
             // player.removePotionEffect(PotionEffectType.SLOW)
-            player.removePotionEffect(PotionEffectType.JUMP)
+            //1.18 conditional
+            //player.removePotionEffect(PotionEffectType.JUMP)
+            player.removePotionEffect(PotionEffectType.JUMP_BOOST)
             player.setWalkSpeed(0.2f) // default speed
 
             crawling.remove(playerId)?.cleanup()
